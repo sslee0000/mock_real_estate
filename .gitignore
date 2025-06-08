@@ -1,0 +1,6 @@
+# .gitignore for VSCode settings and Python
+.vscode/
+__pycache__/
+*.pyc
+.env
+.venv
