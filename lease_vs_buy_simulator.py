@@ -2,16 +2,16 @@
 home_price = 1_500_000_000    # 집값
 loan_amount = 1_000_000_000   # 대출금
 loan_rate = 0.03            # 연이율 4%
-loan_years = 30             # 상환기간 30년. 원리금 계산용
-now_years = 3 # loan_years 중 now_years 후 시점을 시뮬레이션
+loan_years = 50             # 상환기간 30년. 원리금 계산용
+now_years = 10 # loan_years 중 now_years 후 시점을 시뮬레이션
 
 rent_deposit = 500_000_000  # 전세금
 rent_loan = 120_000_000     # 전세대출
 rent_loan_rate = 0.025      # 전세대출 금리 %
-invest_rate = 0.04          # 금융투자수익률 % # 예: 4% (주식, 펀드 등)
+invest_rate = 0.15          # 금융투자수익률 % # 예: 4% (주식, 펀드 등)
 
-home_growth = 0.1         # 집값 now_years 후 20% 상승 (예: 1.2배)
-maintenance_cost = 50_000_000  # 유지비(취득세 등, now_years간 총액)
+home_growth = 0.075        # 집값 연간상승률 2% (예시)
+maintenance_cost = 0  # 유지비(취득세 등, now_years간 총액)
 
 # 입력값 요약 출력
 print("[입력값 요약]")
@@ -20,7 +20,7 @@ print(f"  - 대출금: {loan_amount:,.0f}원, 대출금리: {loan_rate*100:.2f}%
 print(f"  - 전세보증금: {rent_deposit:,.0f}원, 전세대출: {rent_loan:,.0f}원, 전세대출금리: {rent_loan_rate*100:.2f}%")
 print(f"  - 금융투자수익률(주식, 채권 등): {invest_rate*100:.2f}%")
 print(f"  - 유지비(취득세 등): {maintenance_cost:,.0f}원 (총 {now_years}년간)")
-print(f"  - 시뮬레이션 기간: {now_years}년, 집값 상승률: {home_growth*100:.1f}%")
+print(f"  - 시뮬레이션 기간: {now_years}년, 집값 연간상승률: {home_growth*100:.2f}%")
 print()
 
 # ---------------  A. 매매(집을 산경우) --------------- #
@@ -59,7 +59,7 @@ total_interest, total_principal = total_interest_and_principal_paid(
 )
 
 # now_years 뒤 집 값
-future_home_value = home_price * (1 + home_growth)
+future_home_value = home_price * ((1 + home_growth) ** now_years)
 
 # 집값 상승분
 home_profit = future_home_value - home_price
@@ -98,7 +98,7 @@ lease_total_assets = rent_deposit + lump_sum_future + surplus_future
 
 # 결과 출력
 print(f"[집 구입] {now_years}년 뒤 상세 내역")
-print(f"  - 집값: {future_home_value:,.0f}원, (상승분 {home_profit:,.0f}원, 상승률: {home_growth*100:.1f}%)")
+print(f"  - 집값: {future_home_value:,.0f}원, (상승분 {home_profit:,.0f}원, 상승률: {(future_home_value/home_price-1)*100:.1f}%)")
 print(f"  - 남은 대출원금: {remain_loan:,.0f}원 갚은 대출원금: {total_principal:,.0f}원")
 print(f"  - 유지비: {maintenance_cost:,.0f}원")
 print(f"  - 누적 이자: {total_interest:,.0f}원")
